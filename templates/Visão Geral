@@ -1,0 +1,19 @@
+<div id="dashboard">
+  <h1>Dashboard</h1>
+  <div id="overview">
+    <div>Total Sales: <span id="totalSales">0</span></div>
+    <div>Total Stock: <span id="totalStock">0</span></div>
+  </div>
+</div>
+
+<script>
+  async function loadDashboardData() {
+    const response = await fetch('/dashboard');
+    const data = await response.json();
+    document.getElementById('totalSales').innerText = data.total_sales;
+    document.getElementById('totalStock').innerText = data.total_stock;
+  }
+
+  loadDashboardData();
+</script>
+

@@ -1,0 +1,35 @@
+<form id="productForm">
+  <input type="text" id="name" placeholder="Name">
+  <input type="number" id="price" placeholder="Price">
+  <input type="number" id="quantity" placeholder="Quantity">
+  <textarea id="description" placeholder="Description"></textarea>
+  <button type="submit">Add Product</button>
+</form>
+
+<div id="productList"></div>
+
+<script>
+  document.getElementById('productForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const product = {
+      name: document.getElementById('name').value,
+      price: document.getElementById('price').value,
+      quantity: document.getElementById('quantity').value,
+      description: document.getElementById('description').value,
+    };
+    await fetch('/products', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(product),
+    });
+    loadProducts();
+  });
+
+  async function loadProducts() {
+    const response = await fetch('/products');
+    const products = await response.json();
+    document.getElementById('productList').innerHTML = products.map(product => `<div>${product.name} - ${product.quantity} in stock</div>`).join('');
+  }
+
+  loadProducts();
+</script>

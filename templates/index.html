@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App MEI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <header>
+        <h1>Bem-vindo ao App MEI</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('login') }}">Login</a></li>
+                <li><a href="{{ url_for('index') }}">Página Inicial</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section>
+        <h2>Produtos</h2>
+        <ul>
+            {% for produto in produtos %}
+                <li>{{ produto[1] }} - R$ {{ produto[2] }}</li>
+            {% endfor %}
+        </ul>
+        <form action="{{ url_for('criar_produto') }}" method="POST">
+            <input type="text" name="nome" placeholder="Nome do Produto" required>
+            <input type="number" name="preco" placeholder="Preço" required>
+            <button type="submit">Adicionar Produto</button>
+        </form>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 App MEI</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

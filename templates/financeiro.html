@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financeiro</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <h1>Gestão Financeira</h1>
+
+    <!-- Saldo Total -->
+    <h2>Saldo Total: R$ {{ saldo }}</h2>
+
+    <!-- Formulário para adicionar transações -->
+    <form action="/financeiro/add" method="POST">
+        <input type="text" name="description" placeholder="Descrição" required>
+        <input type="number" step="0.01" name="amount" placeholder="Valor (use negativo para pagar)" required>
+        <input type="date" name="date" required>
+        <button type="submit">Adicionar</button>
+    </form>
+
+    <!-- Tabela de transações -->
+    <h2>Histórico de Transações</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Descrição</th>
+                <th>Valor</th>
+                <th>Data</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for transaction in transactions %}
+            <tr>
+                <td>{{ transaction.description }}</td>
+                <td>R$ {{ transaction.amount }}</td>
+                <td>{{ transaction.date }}</td>
+                <td>
+                    <a href="/financeiro/delete/{{ transaction.id }}" style="color: red;">Deletar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="/">Voltar para a Home</a>
+</body>
+</html>
