@@ -3,21 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bem-vindo ao App MEI</title>
+    <title>Bem-vindo</title>
 </head>
 <body>
-    <h1>Bem-vindo ao App MEI</h1>
-
-    <h2>Produtos</h2>
-    {% for produto in produtos %}
-        <p>{{ produto[0] }} - R$ {{ produto[1] }}</p>
-    {% endfor %}
-
-    <h2>Adicionar Novo Produto</h2>
-    <form action="/adicionar_produto" method="POST">
-        <input type="text" name="nome_produto" placeholder="Nome do Produto" required>
-        <input type="number" name="preco_produto" placeholder="Preço" required>
-        <button type="submit">Adicionar Produto</button>
-    </form>
+    <h1>Bem-vindo à sua página inicial!</h1>
+    <p>Você está logado com sucesso!</p>
 </body>
 </html>

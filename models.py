@@ -1,41 +1,26 @@
 from flask_sqlalchemy import SQLAlchemy
 
+# Definir o banco de dados
 db = SQLAlchemy()
 
-class Client(db.Model):
+class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), nullable=False)
-    email = db.Column(db.String(100), nullable=False)
-    phone = db.Column(db.String(15), nullable=False)
-class Product(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), nullable=False)
-    quantity = db.Column(db.Integer, nullable=False, default=0)
-    price = db.Column(db.Float, nullable=False)
-    min_quantity = db.Column(db.Integer, nullable=False, default=1)  # Estoque mínimo para alerta
-class Transaction(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    description = db.Column(db.String(200), nullable=False)
-    amount = db.Column(db.Float, nullable=False)  # Valores positivos para receber, negativos para pagar
-    date = db.Column(db.Date, nullable=False)
-class Product(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), nullable=False)
-    description = db.Column(db.String(200), nullable=True)
-    price = db.Column(db.Float, nullable=False)
-    quantity = db.Column(db.Integer, nullable=False)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    password = db.Column(db.String(200), nullable=False)
 
-    def __repr__(self):
-        return f'<Product {self.name}>'
-@app.route('/products', methods=['GET', 'POST'])
-def manage_products():
-    if request.method == 'POST':
-        data = request.json
-        new_product = Product(name=data['name'], description=data['description'], price=data['price'], quantity=data['quantity'])
-        db.session.add(new_product)
+    # Verificar o login do usuário
+    @staticmethod
+    def verify_login(db, email, password):
+        user = User.query.filter_by(email=email, password=password).first()
+        return user
+
+    # Criar um novo usuário
+    @staticmethod
+    def create_user(db, email, password):
+        new_user = User(email=email, password=password)
+        db.session.add(new_user)
         db.session.commit()
-        return jsonify({'message': 'Product added successfully'}), 201
-    
-    products = Product.query.all()
-    return jsonify([{'name': product.name, 'price': product.price, 'quantity': product.quantity} for product in products])
+class Usuario(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    nome = db.Column(db.String(100), nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)

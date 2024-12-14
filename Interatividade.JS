@@ -1,3 +1,3 @@
-document.addEventListener('DOMContentLoaded', () => {
-    alert("Bem-vindo ao sistema MEI!");
+document.querySelector('form').addEventListener('submit', function(event) {
+    alert('Formulário enviado!');
 });

@@ -1,4 +1,10 @@
-npx react-native init MeuApp
-cd MeuApp
-npx react-native run-android  # Para Android
-npx react-native run-ios      # Para iOS
+from flask import Flask, jsonify
+
+app = Flask(__name__)
+
+@app.route('/api', methods=['GET'])
+def api():
+    return jsonify({'message': 'Hello from Python API'})
+
+if __name__ == '__main__':
+    app.run(debug=True)

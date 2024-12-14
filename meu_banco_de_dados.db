@@ -1,16 +1,25 @@
 import sqlite3
 
-conn = sqlite3.connect('db/meu_banco_de_dados.db')
+conn = sqlite3.connect('meu_banco_de_dados.db')
 cursor = conn.cursor()
 
-# Criar a tabela de produtos
+# Criar tabela de usuários
 cursor.execute('''
-CREATE TABLE IF NOT EXISTS produtos (
+CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    nome TEXT NOT NULL,
-    preco REAL NOT NULL
+    email TEXT NOT NULL,
+    password TEXT NOT NULL
 )
 ''')
 
+# Adicionar um usuário de exemplo (opcional)
+cursor.execute("INSERT INTO users (email, password) VALUES (?, ?)", ('exemplo@dominio.com', 'senha123'))
+
 conn.commit()
 conn.close()
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+
+app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///meu_banco_de_dados.db'
+db = SQLAlchemy(app)
